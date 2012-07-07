@@ -1,0 +1,129 @@
+
+Payroll Processing Database
+INSTALLATION GUIDE
+Version 1.0
+Date: 2011-2014
+
+========================================
+PREREQUISITES
+========================================
+
+Hardware Requirements:
+- CPU: Intel Xeon or equivalent
+- RAM: 4GB minimum, 8GB recommended
+- Disk: 50GB free space
+- Network: 100Mbps
+
+Software Requirements:
+- Windows Server 2008 R2 or 2012
+- SQL Server 2008 R2 or 2012 (Standard or Enterprise)
+- IIS 7.5 or 8.0
+- .NET Framework 4.0 or 4.5
+- SQL Server Management Studio
+
+========================================
+INSTALLATION STEPS
+========================================
+
+STEP 1: DATABASE SETUP
+1. Open SQL Server Management Studio
+2. Connect to your SQL Server instance
+3. Open and execute: database\01-schema.sql
+4. Open and execute: database\02-stored-procedures.sql
+5. Open and execute: database\03-triggers.sql
+6. Open and execute: database\04-seed-data.sql
+7. Verify tables created: SELECT * FROM INFORMATION_SCHEMA.TABLES
+
+STEP 2: IIS CONFIGURATION
+1. Open IIS Manager
+2. Create new Application Pool:
+   - Name: Payroll-Processing-DatabaseAppPool
+   - .NET Framework: v4.0
+   - Managed Pipeline: Integrated
+3. Create new Website:
+   - Name: Payroll-Processing-Database
+   - Physical Path: C:\inetpub\wwwroot\Payroll-Processing-Database
+   - Application Pool: Payroll-Processing-DatabaseAppPool
+   - Port: 8080
+4. Set permissions on folder for IIS_IUSRS
+
+STEP 3: APPLICATION DEPLOYMENT
+1. Copy files from src\WebApp to C:\inetpub\wwwroot\Payroll-Processing-Database
+2. Edit Web.config:
+   - Update connection string with your server name
+   - Update any application settings
+3. Test connection string in notepad
+4. Restart IIS Application Pool
+
+STEP 4: VERIFICATION
+1. Open browser
+2. Navigate to http://localhost:8080
+3. Login with default credentials:
+   - Username: admin
+   - Password: admin123
+4. Verify all pages load correctly
+5. Test database connectivity
+
+STEP 5: SSRS REPORTS (Optional)
+1. Open Report Manager (http://localhost/Reports)
+2. Create new folder: Payroll-Processing-Database
+3. Upload reports from reports\SSRS folder
+4. Configure data sources
+5. Test reports
+
+========================================
+TROUBLESHOOTING
+========================================
+
+Issue: Cannot connect to database
+Solution: 
+- Verify SQL Server is running
+- Check connection string in Web.config
+- Verify SQL Server allows remote connections
+- Check Windows Firewall settings
+
+Issue: IIS shows 500 error
+Solution:
+- Check Application Pool is started
+- Verify .NET Framework 4.0 is installed
+- Check folder permissions
+- Review Event Viewer logs
+
+Issue: Reports not working
+Solution:
+- Verify SSRS is installed and configured
+- Check Report Server URL
+- Verify data source credentials
+- Test connection in Report Manager
+
+========================================
+SUPPORT
+========================================
+
+For issues:
+1. Check Event Viewer logs
+2. Check IIS logs
+3. Check SQL Server logs
+4. Contact IT support with error details
+
+========================================
+MAINTENANCE
+========================================
+
+Daily:
+- Monitor application logs
+- Check disk space
+- Verify backups completed
+
+Weekly:
+- Review error logs
+- Check database size
+- Update statistics
+
+Monthly:
+- Apply Windows updates
+- Apply SQL Server updates
+- Review security settings
+- Archive old data
+
+========================================
